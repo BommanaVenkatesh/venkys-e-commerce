@@ -1,0 +1,11 @@
+ion-tab-button {
+  --color-selected: var(--ion-color-primary); // Default Ionic highlight color
+}
+
+.active-tab {
+  color: var(--ion-color-primary);
+}
+
+.active-tab ion-icon {
+  color: var(--ion-color-primary);
+}

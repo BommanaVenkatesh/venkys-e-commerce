@@ -1,0 +1,159 @@
+<ion-content [fullscreen]="true">
+  <div class="bg-white">
+    <div class="py-16 sm:py-24" *ngIf="orderDetails.length>0">
+      <div class="mx-auto max-w-7xl sm:px-2 lg:px-8">
+        <div class="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
+          <h1
+            class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
+          >
+            My Orders
+          </h1>
+          <p class="mt-2 text-sm text-gray-500">
+            Check the status of recent orders, manage returns, and discover
+            similar products.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-16">
+        <div class="mx-auto max-w-7xl sm:px-2 lg:px-8">
+          <div class="mx-auto max-w-2xl space-y-8 sm:px-4 lg:max-w-4xl lg:px-0">
+            <div
+              *ngFor="let order of orderDetails"
+              class="border-b border-t border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border"
+            >
+              <div
+                class="flex items-center ml-2 border-b border-gray-200 p-4 sm:grid sm:grid-cols-4 sm:gap-x-6 sm:p-6"
+              >
+                <dl
+                  class="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2"
+                >
+                  <div>
+                    <dt class="font-medium text-gray-900">Order number</dt>
+                    <dd class="mt-1 text-gray-500">{{getOrderId(order.id)}}</dd>
+                  </div>
+
+                  <div>
+                    <dt class="font-medium text-gray-900">Total amount</dt>
+                    <dd class="mt-1 font-medium text-gray-900">
+                      {{order.orderTotal | currency:"INR"}}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+
+              <ul role="list" class="divide-y divide-gray-200">
+                <li class="p-4 sm:p-6">
+                  <div
+                    class="flex items-center sm:items-start"
+                    *ngFor="let item of order.items"
+                  >
+                    <div
+                      class="size-20 shrink-0 mt-2 overflow-hidden rounded-lg bg-gray-200 sm:size-40"
+                    >
+                      <img
+                        [src]="getImage(item)"
+                        alt="Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps."
+                        class="size-full object-cover"
+                      />
+                    </div>
+                    <div class="ml-6 flex-1 text-sm">
+                      <div
+                        class="font-medium text-gray-900 sm:flex sm:justify-between"
+                      >
+                        <h5>{{item.name}}</h5>
+                        <p class="mt-2 sm:mt-0">
+                          {{item.price|currency:"INR"}}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-6 sm:flex sm:justify-between">
+                    <div class="flex items-center">
+                      <svg
+                        class="size-5 text-green-500"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                        data-slot="icon"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <p class="ml-2 text-sm font-medium text-gray-500">
+                        {{convertStatus(order.status)}} on
+                        <time>{{order.createdAt |date:"medium"}}</time>
+                      </p>
+                    </div>
+
+                    <div
+                      class="mt-6 flex items-center space-x-4 divide-x divide-gray-200 border-t border-gray-200 pt-4 text-sm font-medium sm:ml-4 sm:mt-0 sm:border-none sm:pt-0"
+                    >
+                      <div
+                        class="flex flex-1 justify-center"
+                        (click)="viewOrder(order.id)"
+                      >
+                        <a
+                          class="whitespace-nowrap text-indigo-600 hover:text-indigo-500"
+                          >View Details</a
+                        >
+                      </div>
+                      <div class="flex flex-1 justify-center pl-4">
+                        <a
+                          href="#"
+                          class="whitespace-nowrap text-indigo-600 hover:text-indigo-500"
+                          >Buy again</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="orderDetails.length===0" class="mt-10">
+      <ion-card>
+        <ion-card-content>
+          <h4
+            class="ion-text-center"
+            style="color: var(--ion-color-medium); font-weight: bold"
+          >
+            No Orders Yet!
+          </h4>
+          <p class="ion-text-center" style="color: var(--ion-color-medium)">
+            It looks like you haven’t placed any orders yet. Start exploring our
+            amazing products and place your first order today!
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <br />
+      <h5
+        style="
+          color: var(--ion-color-default);
+          max-width: 70%;
+          margin-left: 15%;
+          font-size: small;
+          margin-top: 5vh;
+          text-align: center;
+        "
+      >
+        Browse through our best sellers and exclusive deals to find the perfect
+        items for you. Place your order and experience effortless shopping!
+      </h5>
+      <br />
+      <br />
+      <img
+        src="assets/undraw_order_delivered_re_v4ab.svg"
+        alt="No orders illustration"
+      />
+    </div>
+  </div>
+</ion-content>
